@@ -23,15 +23,13 @@ const logout = () => {
 </script>
 
 <template>
-    <div>
-
+    <div class="bg-gray-100 dark:bg-gray-900">
         <Head :title="title" />
 
         <!-- Page Heading -->
-        <header v-if="$slots.header" class="bg-gray-300 dark:bg-gray-700">
+        <header v-if="$slots.header" class="mx-4 bg-gray-300 dark:bg-gray-700 rounded">
             <div class="flex justify-between">
                 <div class="py-6 px-4 sm:px-6 dark:text-gray-50">
-                    Painel do Administrador -
                     <slot name="header" />
                 </div>
 
