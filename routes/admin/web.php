@@ -16,11 +16,11 @@ use Inertia\Inertia;
 |
 */
 
-Route::prefix('admin')->name('admin.')->group(function() {
-    Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
-})->middleware([
+Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
     'role:admin'
-]);
+])->prefix('admin')->name('admin.')->group(function() {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
+});
