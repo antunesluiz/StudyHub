@@ -20,10 +20,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $gender = $this->faker->randomElement(['male', 'female']);
+
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->name($gender),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
+            'username' => $this->faker->unique()->userName(),
+            'birthdate' => $this->faker->date(),
+            'gender' => $gender,
+            'phone' => $this->faker->phoneNumber(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,

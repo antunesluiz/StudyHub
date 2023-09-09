@@ -14,7 +14,7 @@ class StudentSeeder extends Seeder
     public function run(): void
     {
         $users = User::factory(100)->create([
-            'created_at' => fake()->dateTimeBetween('2023-01-01', 'now')
+            'created_at' => fake()->dateTimeBetween('2023-05-01', 'now')
         ]);
 
         foreach($users as $user) {
