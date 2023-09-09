@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminStudentController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -23,4 +24,13 @@ Route::middleware([
     'role:admin'
 ])->prefix('admin')->name('admin.')->group(function() {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+    'role:admin'
+])->prefix('admin/student')->name('admin.student.')->group(function() {
+    Route::get('/', [AdminStudentController::class, 'index'])->name('index');
 });
