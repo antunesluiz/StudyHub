@@ -1,6 +1,6 @@
 <script setup>
 import AdminLayout from '@/Layouts/AdminLayout.vue';
-import StudentsCharts from '../Admin/Partials/StudentsCharts.vue';
+import StudentsCharts from './Partials/StudentsCharts.vue';
 import ClassesCharts from './Partials/ClassesCharts.vue';
 
 defineProps({
