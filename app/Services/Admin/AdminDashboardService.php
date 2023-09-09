@@ -2,19 +2,14 @@
 
 namespace App\Services\Admin;
 
+use App\Helpers\ChartHelper;
 use App\Helpers\DateHelper;
+use App\Repositories\CourseRepository;
 use App\Repositories\UserRepository;
 use Carbon\Carbon;
 
 class AdminDashboardService
 {
-    /**
-     * Repositório de usuários.
-     *
-     * @var UserRepository
-     */
-    protected $userRepository;
-
     /**
      * Assistente de datas.
      *
@@ -23,15 +18,22 @@ class AdminDashboardService
     protected $dateHelper;
 
     /**
+     * Assistente de datas.
+     *
+     * @var ChartHelper
+     */
+    protected $chartHelper;
+
+    /**
      * Construtor da classe.
      *
      * @param UserRepository $userRepository Instância do repositório de usuários.
      * @param DateHelper $dateHelper Instância do assistente de datas.
      */
-    public function __construct(UserRepository $userRepository, DateHelper $dateHelper)
+    public function __construct(DateHelper $dateHelper, ChartHelper $chartHelper)
     {
-        $this->userRepository = $userRepository;
         $this->dateHelper = $dateHelper;
+        $this->chartHelper = $chartHelper;
     }
 
     /**
@@ -46,49 +48,26 @@ class AdminDashboardService
     public function getStudentChart(int $numberOfMonths = 4): array
     {
         $currentMonth = Carbon::now()->startOfMonth();
-        $startingMonth = $this->dateHelper->getStartingMonth($currentMonth, $numberOfMonths);
 
-        $totals = $this->userRepository->getStudentTotalsFromDate($startingMonth);
+        $totals = (new UserRepository)->getStudentTotalsFromDate($this->dateHelper->getStartingMonth($currentMonth, $numberOfMonths));
 
-        return $this->formatChartData($totals, $currentMonth, $numberOfMonths);
+        return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
     }
 
-    /**
-     * Formata os dados para o gráfico com base nos totais de estudantes e no intervalo de datas.
-     *
-     * @param \Illuminate\Support\Collection $totals Totais de estudantes.
-     * @param Carbon $currentMonth Data do mês atual.
-     * @param int $numberOfMonths Número de meses para formatar os dados.
-     * @return array Retorna um array contendo totais e nomes de meses.
-     */
-    private function formatChartData($data, Carbon $currentMonth, int $numberOfMonths): array
-    {
-        $results = [];
-        $monthNames = [];
-        $monthlyTotals = $data['monthlyTotals'];
-        $totalStudents = $data['totalStudents'];
-        $totalForPeriod = 0;
-    
-        for ($i = 0; $i < $numberOfMonths; $i++) {
-            $year = $currentMonth->year;
-            $month = $currentMonth->month;
-            $monthName = $currentMonth->isoFormat('MMMM');
-    
-            $totalForPeriod += $monthlyTotals["$year-$month"]->total ?? 0;
-            $results[] = $monthlyTotals["$year-$month"]->total ?? 0;
-            $monthNames[] = $monthName;
-    
-            $currentMonth->subMonth();
-        }
-    
-        // Calcula a porcentagem de aumento para o período em relação ao total anterior
-        $percentageIncrease = $totalStudents ? ($totalForPeriod / $totalStudents) * 100 : 0;
-    
-        return [
-            'totals' => array_reverse($results),
-            'monthNames' => array_reverse($monthNames),
-            'percentageIncrease' => $percentageIncrease,
-            'totalStudents' => $totalStudents
-        ];
+    public function getCoursesChart(int $numberOfMonths = 4) {
+        $currentMonth = Carbon::now()->startOfMonth();
+
+        $totals = (new CourseRepository)->getCoursesTotalsFromDate($this->dateHelper->getStartingMonth($currentMonth, $numberOfMonths));
+
+        return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
+
+    }
+
+    public function getClassesChart(int $numberOfMonths = 4) {
+        $currentMonth = Carbon::now()->startOfMonth();
+
+       // $totals = $this->userRepository->getStudentTotalsFromDate($this->dateHelper->getStartingMonth($currentMonth, $numberOfMonths));
+
+        //return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
     }
 }

@@ -19,7 +19,9 @@ class AdminDashboardController extends Controller
     public function index(AdminDashboardService $adminDashboardService)
     {
         return Inertia::render('Admin/Index', [
-            'studentChart' => $adminDashboardService->getStudentChart()
+            'studentChart' => $adminDashboardService->getStudentChart(),
+            'CoursesChart' => $adminDashboardService->getCoursesChart(),
+            'classesChart' => $adminDashboardService->getClassesChart()
         ]);
     }
 }
