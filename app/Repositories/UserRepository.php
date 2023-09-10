@@ -30,13 +30,25 @@ class UserRepository
             ->keyBy(function ($date) {
                 return $date->year . '-' . $date->month;
             });
-    
+
         // Subquery para o total de alunos
         $totalStudents = User::role('student')->count();
-    
+
         return [
             'monthlyTotals' => $monthlyTotals,
             'totalStudents' => $totalStudents
         ];
+    }
+
+    public function getFilteredStudents($search = '', $pages = 20)
+    {
+        return User::search($search)
+            ->query(function ($query) {
+                $query->role('student')
+                    ->whereDoesntHave('roles', function ($q) {
+                        $q->whereIn('name', ['admin', 'teacher']);
+                    });
+            })
+            ->paginate($pages);
     }
 }

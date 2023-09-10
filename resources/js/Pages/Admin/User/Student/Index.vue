@@ -3,6 +3,12 @@ import AdminLayout from '@/Layouts/AdminLayout.vue';
 import TopNavigation from './Partials/TopNavigation.vue';
 import SearchInput from './Partials/SearchInput.vue'
 import StudentTable from './Partials/StudentTable.vue'
+
+const props = defineProps({
+    students: Object,
+    filter: String
+});
+
 </script>
 
 <template>
@@ -16,9 +22,9 @@ import StudentTable from './Partials/StudentTable.vue'
         <div class="bg-gray-300 dark:bg-gray-700 py-8 px-6 sm:px-6 dark:text-gray-50 mt-4 rounded mx-4">
             <TopNavigation></TopNavigation>
             <div class="mt-4 flex flex-wrap flex-row">
-                <SearchInput></SearchInput>
+                <SearchInput :filter="filter"></SearchInput>
             </div>
-            <StudentTable></StudentTable>
+            <StudentTable :students="students" :search="filter"></StudentTable>
         </div>
     </AdminLayout>
 </template>

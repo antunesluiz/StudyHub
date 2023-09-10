@@ -54,19 +54,20 @@ class AdminDashboardService
         return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
     }
 
-    public function getCoursesChart(int $numberOfMonths = 4) {
+    public function getCoursesChart(int $numberOfMonths = 4)
+    {
         $currentMonth = Carbon::now()->startOfMonth();
 
         $totals = (new CourseRepository)->getCoursesTotalsFromDate($this->dateHelper->getStartingMonth($currentMonth, $numberOfMonths));
 
         return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
-
     }
 
-    public function getClassesChart(int $numberOfMonths = 4) {
+    public function getClassesChart(int $numberOfMonths = 4)
+    {
         $currentMonth = Carbon::now()->startOfMonth();
 
-       // $totals = $this->userRepository->getStudentTotalsFromDate($this->dateHelper->getStartingMonth($currentMonth, $numberOfMonths));
+        // $totals = $this->userRepository->getStudentTotalsFromDate($this->dateHelper->getStartingMonth($currentMonth, $numberOfMonths));
 
         //return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
     }

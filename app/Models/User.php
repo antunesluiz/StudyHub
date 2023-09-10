@@ -10,6 +10,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Laravel\Scout\Searchable;
 
 class User extends Authenticatable
 {
@@ -19,6 +20,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
     use HasRoles;
+    use Searchable;
 
     /**
      * The attributes that are mass assignable.
@@ -29,6 +31,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'username',
+        'birthdate',
+        'gender'
     ];
 
     /**
@@ -60,4 +66,12 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    /**
+     * Get the name of the index associated with the model.
+     */
+    public function searchable(): string
+    {
+        return 'users_index';
+    }
 }
