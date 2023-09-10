@@ -31,6 +31,6 @@ Route::middleware([
     config('jetstream.auth_session'),
     'verified',
     'role:admin'
-])->prefix('admin/student')->name('admin.student.')->group(function() {
-    Route::get('/', [AdminStudentController::class, 'index'])->name('index');
+])->prefix('admin')->name('admin.')->group(function() {
+    Route::resource('student', AdminStudentController::class);
 });
