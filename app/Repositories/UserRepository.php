@@ -40,6 +40,13 @@ class UserRepository
         ];
     }
 
+    /**
+     * Retorna uma lista paginada de alunos filtrados com base em uma pesquisa e quantidade de páginas.
+     *
+     * @param string $search A string de pesquisa para filtrar os alunos.
+     * @param int $pages O número de alunos por página a ser exibido.
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
     public function getFilteredStudents($search = '', $pages = 20)
     {
         return User::search($search)

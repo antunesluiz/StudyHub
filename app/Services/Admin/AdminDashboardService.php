@@ -54,6 +54,15 @@ class AdminDashboardService
         return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
     }
 
+    /**
+     * Obtém os dados do gráfico de cursos.
+     *
+     * Esta função recupera o total de cursos a partir de uma data específica
+     * e formata os dados para o gráfico.
+     *
+     * @param int $numberOfMonths Número de meses para incluir no gráfico (opcional, padrão é 4).
+     * @return array Retorna um array contendo os totais de estudantes e os nomes dos meses.
+     */
     public function getCoursesChart(int $numberOfMonths = 4)
     {
         $currentMonth = Carbon::now()->startOfMonth();
@@ -63,6 +72,15 @@ class AdminDashboardService
         return $this->chartHelper->formatChartData($totals, $currentMonth, $numberOfMonths);
     }
 
+    /**
+     * Obtém os dados do gráfico de aulas.
+     *
+     * Esta função recupera os totais de aulas a partir de uma data específica
+     * e formata os dados para o gráfico.
+     *
+     * @param int $numberOfMonths Número de meses para incluir no gráfico (opcional, padrão é 4).
+     * @return array Retorna um array contendo os totais de estudantes e os nomes dos meses.
+     */
     public function getClassesChart(int $numberOfMonths = 4)
     {
         $currentMonth = Carbon::now()->startOfMonth();

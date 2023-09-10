@@ -10,12 +10,27 @@ use Inertia\Inertia;
 
 class AdminStudentController extends Controller
 {
-    public function index(Request $request) {
-        $students = (new AdminStudentService)->getStudents($request->get('filter'));
-
+    /**
+     * Exibe a página principal de alunos.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Inertia\Response
+     */
+    public function index(Request $request)
+    {
         return Inertia::render('Admin/User/Student/Index', [
-            'students'  => AdminStudentResource::collection($students),
-            'filter'    => $request->get('filter')
+            'students'  => AdminStudentResource::collection((new AdminStudentService)->getStudents($request->get('filter'))),
+            'filter'    => $request->get('filter') ?? ''
         ]);
+    }
+
+    /**
+     * Exibe a página de criação de um novo aluno.
+     *
+     * @return \Inertia\Response
+     */
+    public function create()
+    {
+        return Inertia::render('Admin/User/Student/Create');
     }
 }
