@@ -14,7 +14,7 @@ const props = defineProps({
 </script>
 
 <template>
-    <AdminLayout title="Dashboard" class="sm:ml-64 bg-gray-100 dark:bg-gray-900 pt-4 pb-4">
+    <AdminLayout title="Estudantes" class="sm:ml-64 bg-gray-100 dark:bg-gray-900 pt-4 pb-4">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
                 Estudantes
@@ -24,11 +24,12 @@ const props = defineProps({
         <div class="bg-gray-300 dark:bg-gray-700 py-8 px-6 sm:px-6 dark:text-gray-50 mt-4 rounded mx-4">
             <TopNavigation></TopNavigation>
             <div class="mt-4 flex flex-wrap flex-row justify-between">
-                <SearchInput :filter="filter"></SearchInput>
-                <PrimaryButton>
-                    <Link :href="route('admin.student.create')">Adicionar estudante</Link>
-                </PrimaryButton>
+                <SearchInput :filter="filter" class="md:w-1/3 w-full"></SearchInput>
+                <Link :href="route('admin.student.create')">
+                <PrimaryButton class="mt-4 text-right">Adicionar estudante</PrimaryButton>
+                </Link>
             </div>
             <StudentTable :students="students" :search="filter"></StudentTable>
         </div>
-    </AdminLayout></template>
+    </AdminLayout>
+</template>
