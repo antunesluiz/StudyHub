@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\AdminStudentRequest;
 use App\Http\Resources\Admin\AdminStudentResource;
 use App\Services\Admin\AdminStudentService;
 use Illuminate\Http\Request;
@@ -32,5 +33,9 @@ class AdminStudentController extends Controller
     public function create()
     {
         return Inertia::render('Admin/User/Student/Create');
+    }
+
+    public function store(AdminStudentRequest $request)
+    {
     }
 }

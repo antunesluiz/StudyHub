@@ -19,5 +19,6 @@ class AdminSeeder extends Seeder
         ]);
 
         $user->assignRole('admin', 'teacher', 'student');
+        $user->givePermissionTo('create user');
     }
 }
