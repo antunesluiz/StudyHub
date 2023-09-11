@@ -21,6 +21,7 @@
     "dependencies": {
         "@vueuse/core": "^10.2.1",
         "flowbite": "^1.8.1",
-        "vue3-apexcharts": "^1.4.4"
+        "vue3-apexcharts": "^1.4.4",
+        "vue3-tel-input": "^1.0.4"
     }
 }
