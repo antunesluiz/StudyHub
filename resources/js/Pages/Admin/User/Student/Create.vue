@@ -4,7 +4,7 @@ import TopNavigation from './Partials/TopNavigation.vue';
 import { useForm } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
-import InputErrors from '@/Components/InputErrors.vue';
+import UsernameSuggestions from '@/Components/UsernameSuggestions.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SelectInput from '@/Components/SelectInput.vue'
@@ -52,7 +52,10 @@ const submitForm = () => {
 
 const useSuggestedUsername = (suggestion) => {
     form.username = suggestion;
+    form.errors.username = null;
+    form.errors.username_suggestions = [];
 };
+
 </script>
 
 <template>
@@ -92,7 +95,7 @@ const useSuggestedUsername = (suggestion) => {
                                 autofocus autocomplete="username" />
 
                             <InputError class="mt-2" :message="form.errors.username" />
-                            <InputErrors class="mt-2" :messages="form.errors.username_suggestions"
+                            <UsernameSuggestions class="mt-2" :messages="form.errors.username_suggestions"
                                 @suggestionClicked="useSuggestedUsername" />
                         </div>
 
