@@ -58,4 +58,9 @@ class UserRepository
             })
             ->paginate($pages);
     }
+
+    public function createNewUser($data)
+    {
+        return User::create($data);
+    }
 }

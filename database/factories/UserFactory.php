@@ -21,12 +21,12 @@ class UserFactory extends Factory
     public function definition(): array
     {
         $gender = $this->faker->randomElement(['male', 'female']);
-
+        $name = $this->faker->name($gender);
         return [
-            'name' => $this->faker->name($gender),
+            'name' => $name,
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
-            'username' => $this->faker->unique()->userName(),
+            'username' => Str::slug($name),
             'birthdate' => $this->faker->date(),
             'gender' => $gender,
             'phone' => $this->faker->phoneNumber(),
@@ -36,6 +36,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
+            'created_at' => fake()->dateTimeBetween('2023-05-01', 'now')
         ];
     }
 
@@ -56,14 +57,14 @@ class UserFactory extends Factory
      */
     public function withPersonalTeam(callable $callback = null): static
     {
-        if (! Features::hasTeamFeatures()) {
+        if (!Features::hasTeamFeatures()) {
             return $this->state([]);
         }
 
         return $this->has(
             Team::factory()
                 ->state(fn (array $attributes, User $user) => [
-                    'name' => $user->name.'\'s Team',
+                    'name' => $user->name . '\'s Team',
                     'user_id' => $user->id,
                     'personal_team' => true,
                 ])

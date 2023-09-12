@@ -37,5 +37,8 @@ class AdminStudentController extends Controller
 
     public function store(AdminStudentRequest $request)
     {
+        (new AdminStudentService)->createStudent($request->validated());
+
+        return redirect()->to('/admin/student');
     }
 }

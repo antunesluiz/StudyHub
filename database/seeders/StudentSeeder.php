@@ -13,11 +13,9 @@ class StudentSeeder extends Seeder
      */
     public function run(): void
     {
-        $users = User::factory(100)->create([
-            'created_at' => fake()->dateTimeBetween('2023-05-01', 'now')
-        ]);
+        $users = User::factory(100)->create([]);
 
-        foreach($users as $user) {
+        foreach ($users as $user) {
             $user->assignRole('student');
         }
     }

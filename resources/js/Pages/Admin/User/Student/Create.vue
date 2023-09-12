@@ -4,12 +4,14 @@ import TopNavigation from './Partials/TopNavigation.vue';
 import { useForm } from '@inertiajs/vue3';
 import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
+import InputErrors from '@/Components/InputErrors.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import SelectInput from '@/Components/SelectInput.vue'
 
 import { VueTelInput } from 'vue3-tel-input'
 import 'vue3-tel-input/dist/vue3-tel-input.css'
+import { ref } from 'vue';
 
 const form = useForm({
     name: '',
@@ -28,6 +30,12 @@ const gender = [
     'Outros'
 ]
 
+const onInput = (phone, phoneObject, input) => {
+    if (phoneObject?.formatted) {
+        form.phone = phoneObject.formatted
+    }
+}
+
 const submitForm = () => {
     form.post(route('admin.student.store'), {
         errorBag: 'submitForm',
@@ -42,7 +50,9 @@ const submitForm = () => {
     });
 }
 
-
+const useSuggestedUsername = (suggestion) => {
+    form.username = suggestion;
+};
 </script>
 
 <template>
@@ -67,12 +77,12 @@ const submitForm = () => {
                 <form @submit.prevent="submitForm" class="mt-6 space-y-6">
                     <div class="flex flex-wrap flex-row">
                         <div class="grow sm:mr-4">
-                            <InputLabel for="nome" value="Nome Completo" />
+                            <InputLabel for="name" value="Nome Completo" />
 
-                            <TextInput id="nome" type="text" class="mt-1 block w-full" v-model="form.nome" required
-                                autofocus autocomplete="nome" />
+                            <TextInput id="name" type="text" class="mt-1 block w-full" v-model="form.name" required
+                                autofocus autocomplete="name" />
 
-                            <InputError class="mt-2" :message="form.errors.nome" />
+                            <InputError class="mt-2" :message="form.errors.name" />
                         </div>
 
                         <div class="grow sm:mr-4">
@@ -82,6 +92,8 @@ const submitForm = () => {
                                 autofocus autocomplete="username" />
 
                             <InputError class="mt-2" :message="form.errors.username" />
+                            <InputErrors class="mt-2" :messages="form.errors.username_suggestions"
+                                @suggestionClicked="useSuggestedUsername" />
                         </div>
 
                         <div class="grow sm:mr-4">
@@ -116,8 +128,8 @@ const submitForm = () => {
                         <div class="grow sm:mr-4">
                             <InputLabel for="phone" value="Telefone" />
 
-                            <vue-tel-input id="phone" v-model="form.phone" mode="international" required autofocus
-                                autocomplete="phone"
+                            <vue-tel-input id="phone" :value="form.phone" @input="onInput" mode="international" required
+                                autofocus autocomplete="phone"
                                 class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"></vue-tel-input>
 
 
@@ -129,8 +141,8 @@ const submitForm = () => {
                         <div class="grow sm:mr-4">
                             <InputLabel for="password" value="Senha" />
 
-                            <TextInput id="password" type="text" class="mt-1 block w-full" v-model="form.password" required
-                                autofocus autocomplete="password" />
+                            <TextInput id="password" type="password" class="mt-1 block w-full" v-model="form.password"
+                                required autofocus autocomplete="password" />
 
                             <InputError class="mt-2" :message="form.errors.password" />
                         </div>
@@ -138,7 +150,7 @@ const submitForm = () => {
                         <div class="grow sm:mr-4">
                             <InputLabel for="password_confirmation" value="Confirme a senha" />
 
-                            <TextInput id="password_confirmation" type="text" class="mt-1 block w-full"
+                            <TextInput id="password_confirmation" type="password" class="mt-1 block w-full"
                                 v-model="form.password_confirmation" required autofocus
                                 autocomplete="password_confirmation" />
 
