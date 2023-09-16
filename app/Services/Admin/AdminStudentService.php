@@ -15,7 +15,8 @@ class AdminStudentService
 
     public function createStudent($data)
     {
-        $student = (new UserRepository)->createNewUser($data);
+        $profile_photo_path = $data['photo']->store('profile_photo');
+        $student = (new UserRepository)->createNewUser([...$data, 'profile_photo_path' => $profile_photo_path]);
 
         $student->assignRole('student');
     }

@@ -1,4 +1,3 @@
-<!-- InputErrors.vue -->
 <script setup>
 import { ref } from 'vue';
 import { defineProps, defineEmits } from 'vue';

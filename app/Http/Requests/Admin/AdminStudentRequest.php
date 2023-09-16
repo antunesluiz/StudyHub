@@ -38,7 +38,8 @@ class AdminStudentRequest extends FormRequest
             'phone' => ['required', 'string', 'max:255', 'unique:users'],
             'username'  => ['required', 'string', 'max:255', 'unique:users'],
             'birthdate' => ['required', 'string', 'max:255'],
-            'gender'    => ['required', 'string', 'max:255', Rule::in(['masculino', 'feminino', 'outros']),]
+            'gender'    => ['required', 'string', 'max:255', Rule::in(['masculino', 'feminino', 'outros']),],
+            'photo' => 'required|image|mimes:jpeg,jpg,png,gif,svg|max:2048'
         ];
     }
 
